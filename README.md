@@ -1,63 +1,119 @@
 # AniFlow
 
-AniFlow is a Flutter Material 3 application framework for an anime-style media
-client.
+AniFlow is an open-source Flutter application framework for building a modern,
+Material 3 anime-style media client.
 
-## What is public
+This repository intentionally publishes the **application framework only**.
+AniFlow's private integrations with third-party content sources are not part of
+the open-source project.
 
-This repository contains the AniFlow application shell:
+## What is included
 
-- Material 3 theme and design tokens
-- Vietnamese / English UI localization
+The public framework contains the parts of AniFlow that are owned and maintained
+as reusable application infrastructure:
+
+- Material 3 application shell and navigation
+- AniFlow theme, design tokens and typography
+- Vietnamese and English UI localization
 - Home, Search and Library placeholder surfaces
 - local profile and PIN persistence
 - theme and language preferences
-- normalized anime / episode / playback models
+- normalized anime, episode and playback models
 - the generic `AnimeProvider` adapter contract
-- Android, iOS, desktop and web Flutter project scaffolding
+- Android, iOS, Windows, macOS, Linux and Web Flutter scaffolding
+- framework-level tests
 
-## What is intentionally not public
+The public build starts in placeholder mode and does not bootstrap remote
+catalog content.
 
-Third-party content integrations are not included.
+## What is not included
 
-The public repository contains **no** production content provider implementation,
-scraper, parser, endpoint list, catalog mapping, site-specific HTTP behavior,
-playback resolver, provider cache, provider identity bridge, recommendation
-source or provider-specific test fixture.
+Third-party content integrations are intentionally private.
 
-`AnimeProvider` is only an interface. A downstream application can implement
-its own adapter without changing the framework shell.
+This repository does **not** include:
 
-The public source also excludes third-party media artwork used by private builds.
+- production content-provider implementations
+- scrapers or site-specific parsers
+- third-party endpoint or domain lists
+- catalog mappings
+- source-specific HTTP behavior
+- production playback resolvers
+- provider caches or identity bridges
+- provider-specific recommendation sources
+- provider fixtures, captured HTML, JSON or playlists
+- third-party artwork used by private builds
+- AniFlow signing keys or release credentials
 
-## Run the framework
+The public `AnimeProvider` type is only an interface. Applications built on
+AniFlow can provide their own adapters without modifying the framework shell.
 
-Requirements:
-
-- Flutter 3.44.x or a compatible SDK
-- Android SDK for Android builds
-
-Then:
-
-    flutter pub get
-    flutter analyze
-    flutter test
-    flutter run
-
-The app starts in placeholder mode and performs no network content bootstrap.
-
-## Releases
-
-The GitHub Releases page contains the separately built AniFlow Android APK.
-
-Official release APKs are signed outside the public repository. Private signing
-keys and `android/key.properties` are never committed.
+This separation keeps the framework reusable while avoiding redistribution of
+third-party integration code or content.
 
 ## Architecture
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+The public boundary is intentionally small:
+
+```text
+AniFlow framework
+├── App shell / navigation
+├── Theme / localization
+├── Profile / preferences
+├── Generic media models
+└── AnimeProvider contract
+        └── Adapter implementation supplied separately
+```
+
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for more detail.
+
+## Getting started
+
+Requirements:
+
+- Flutter 3.44.x or a compatible Flutter SDK
+- Android SDK when building for Android
+
+Clone the repository, then run:
+
+```bash
+flutter pub get
+flutter analyze
+flutter test
+flutter run
+```
+
+The framework source does not require any third-party content provider to boot.
+
+## Releases
+
+Official Android builds are published through GitHub Releases.
+
+Release APKs are built and signed outside the public source repository.
+Production signing material, including `android/key.properties` and the private
+keystore, is never committed.
+
+The public framework source and the distributed AniFlow application are
+deliberately separated so the reusable application architecture can remain open
+without publishing private third-party integrations.
+
+## Contributing
+
+Changes to the public framework should remain provider-agnostic. Provider,
+scraper, parser, endpoint and source-specific playback logic should not be added
+to this repository.
+
+Before submitting changes, run:
+
+```bash
+flutter analyze
+flutter test
+```
 
 ## License
 
-No software license has been selected yet. The source is publicly visible, but
-reuse and redistribution terms are not granted until a license is added.
+AniFlow's public framework is licensed under the
+[MIT License](LICENSE).
+
+The MIT License applies to the source code published in this repository. It does
+not grant rights to third-party content, trademarks, artwork, media, services or
+external integrations that are not part of this repository.
