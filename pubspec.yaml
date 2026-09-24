@@ -1,5 +1,5 @@
 name: aniflow
-description: "AniFlow public application framework."
+description: "AniFlow public multimedia streaming application framework."
 publish_to: 'none'
 
 version: 1.0.0+1
